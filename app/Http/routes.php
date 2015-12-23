@@ -16,6 +16,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('/edit/{id}', 'DhcpController@update');
         Route::delete('/delete/{id}', 'DhcpController@destroy');
         Route::get('/search/{term}', 'DhcpController@search');
+        Route::get('/getdhcpfile', 'DhcpController@dhcpFile');
     });
 
     Route::group(['prefix' => 'license'], function () {
@@ -26,6 +27,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('/edit/{id}', 'LicenseController@update');
         Route::delete('/delete/{id}', 'LicenseController@destroy');
         Route::get('/search/{term}', 'LicenseController@search');
+        Route::get('/getlicencelist', 'LicenseController@list');
     });
 
     Route::group(['prefix' => 'ipseen'], function () {
