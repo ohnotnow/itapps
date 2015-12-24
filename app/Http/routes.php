@@ -8,6 +8,10 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::auth();
 
+    Route::get('/home', function () {
+        return view('welcome');
+    });
+
     Route::group(['prefix' => 'dhcp'], function () {
         Route::get('/', 'DhcpController@index');
         Route::get('/create', 'DhcpController@create');
