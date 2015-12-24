@@ -3,10 +3,17 @@
 @section('content')
 <div class="container" id="dhcp_list">
     <div class="row">
-        <div class="form-group">
-            <label for="inputSearch">Search</label>
-            <input type="text" id="inputSearch" name="searchterm" value="@{{ searchterm }}" class="form-control" placeholder="Eg, 192.168.1, 00:11:33" v-model="searchterm" @keyup="search | debounce 500">
+        <div class="col-md-8">
+            <a href="{!! action('DhcpController@create') !!}" class="btn btn-primary">Add New</a>
         </div>
+        <div class="col-md-4">
+            <div class="form-group pull">
+                <input type="search" id="inputSearch" name="searchterm" value="@{{ searchterm }}" class="form-control pull-right" placeholder="Search - Eg, 192.168.1, 00:11:33" v-model="searchterm" @keyup="search | debounce 500">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <hr />
         <table class="table table-striped table-hover" id="dhcp_table">
             <thead>
                 <tr>
