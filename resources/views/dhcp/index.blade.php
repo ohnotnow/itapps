@@ -30,8 +30,8 @@
                         <td><a href="/dhcp/edit/@{{ entry.id }}">@{{ entry.mac }}</a></td>
                         <td>@{{ entry.hostname }}</td>
                         <td>@{{ entry.ip }}</td>
-                        <td><a href="mailto:@{{ entry.owner_email }}">@{{ entry.owner_email }}</a></td>
-                        <td><a href="mailto:@{{ entry.added_by }}">@{{ entry.added_by }}</a></td>
+                        <td><a href="mailto:@{{ entry.owner_email }}">@{{ entry.owner_email | strip_email }}</a></td>
+                        <td><a href="mailto:@{{ entry.added_by }}">@{{ entry.added_by | strip_email }}</a></td>
                         <td>@{{ entry.updated_at }}</td>
                     </tr>
             </tbody>
@@ -39,6 +39,9 @@
     </div>
 </div>
 <script>
+    Vue.filter('strip_email', function (value) {
+      return value.replace(/\@.+$/, '');
+    });
     new Vue({
         el: '#dhcp_list',
         data: {

@@ -31,11 +31,11 @@ class DhcpController extends Controller
         $notes = $request->notes;
         $is_ssd = $request->is_ssd;
         $is_disabled = $request->is_disabled;
-        $added_by = 'billy@madeup.com'; //Auth::user()->email;
+        $added_by = Auth::user()->email;
         foreach ($request->macs as $index => $mac) {
             $entry = new DhcpEntry;
             $entry->mac = $mac;
-            $entry->hostname = $request->hostnames[$index];
+            $entry->hostname = $request->hostnames[$index] ? $request->hostnames[$index] : 'dhcphost-' . str_random(8);
             $entry->ip = $request->ips[$index];
             $entry->owner_email = $owner_email;
             $entry->notes = $notes;
@@ -75,5 +75,26 @@ class DhcpController extends Controller
 
     public function dhcpFile()
     {
+        $entries = DhcpEntry::all();
+        $lines = $this->entriesToIscDhcpFormat($entries);
+        return $lines;
+    }
+
+    private function entriesToIscDhcpFormat($entries)
+    {
+        $lines = '';
+        foreach ($entries as $entry) {
+            $lines .= $this->iscFormat($entry);
+        }
+        return $lines;
+    }
+
+    private function iscFormat($entry)
+    {
+        $fixed = '';
+        if ($entry->ip) {
+            $fixed = "; fixed-address: {$entry->ip}";
+        }
+        return "host {$entry->hostname} {hardware-address: {$entry->mac} $fixed}\n";
     }
 }
