@@ -15,7 +15,7 @@ class DhcpController extends Controller
 {
     public function index()
     {
-        $entries = DhcpEntry::latest()->take(30)->get();
+        $entries = DhcpEntry::latest('updated_at')->take(30)->get();
         return view('dhcp.index', compact('entries'));
     }
 
@@ -53,7 +53,7 @@ class DhcpController extends Controller
         return view('dhcp.edit', compact('entry'));
     }
 
-    public function update(DhcpUpdateRequest $request)
+    public function update(DhcpUpdateRequest $request, $id)
     {
         $entry = DhcpEntry::findOrFail($id);
         $entry->fill($request->all());

@@ -27,7 +27,11 @@
             </thead>
             <tbody>
                     <tr v-for="entry in entries">
-                        <td><a href="/dhcp/edit/@{{ entry.id }}">@{{ entry.mac }}</a></td>
+                        <td>
+                            <span class="glyphicon glyphicon-ban-circle" v-if="entry.is_disabled"></span>
+                            <a href="/dhcp/edit/@{{ entry.id }}">@{{ entry.mac }}</a>
+                            <span class="glyphicon glyphicon-sd-video" v-if="entry.is_ssd"></span>
+                        </td>
                         <td>@{{ entry.hostname }}</td>
                         <td>@{{ entry.ip }}</td>
                         <td><a href="mailto:@{{ entry.owner_email }}">@{{ entry.owner_email | strip_email }}</a></td>

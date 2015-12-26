@@ -13,7 +13,7 @@ class DhcpEntry extends Model
         return static::where('mac', 'like', "%{$term}%")
                         ->orWhere('ip', 'like', "%{$term}%")
                         ->orWhere('hostname', 'like', "%{$term}%")
-                        ->orderBy('updated_at')
+                        ->orderBy('updated_at', 'desc')
                         ->take($limit)
                         ->get();
     }
