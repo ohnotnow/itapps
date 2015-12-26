@@ -55,7 +55,7 @@
         methods: {
             search: function () {
                 if (this.searchterm) {
-                    this.$http.get('/dhcp/search/' + this.searchterm).then(function (response) {
+                    this.$http.get('/dhcp/search/' + encodeURIComponent(this.searchterm)).then(function (response) {
                         this.entries = response.data;
                     });
                 } else {
