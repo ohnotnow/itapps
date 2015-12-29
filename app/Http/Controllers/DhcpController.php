@@ -10,6 +10,7 @@ use App\Http\Requests\DhcpRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DhcpCreateRequest;
 use App\Http\Requests\DhcpUpdateRequest;
+use App\Http\Requests\DhcpBulkUpdateRequest;
 
 class DhcpController extends Controller
 {
@@ -70,31 +71,42 @@ class DhcpController extends Controller
 
     public function search($term)
     {
-        return DhcpEntry::searchFor($term);
+        if (!$term) {
+            return [];
+        }
+        $limit = $this->calculateResultsLimit($term);
+        return DhcpEntry::searchFor($term, $limit);
+    }
+
+    private function calculateResultsLimit($term)
+    {
+        if (strlen($term) < 5) {
+            return 50;
+        }
+        return 100;
     }
 
     public function dhcpFile()
     {
-        $entries = DhcpEntry::all();
-        $lines = $this->entriesToIscDhcpFormat($entries);
+        $lines = DhcpEntry::inIscFormat();
         return $lines;
     }
 
-    private function entriesToIscDhcpFormat($entries)
+    public function bulkEdit($term)
     {
-        $lines = '';
-        foreach ($entries as $entry) {
-            $lines .= $this->iscFormat($entry);
-        }
-        return $lines;
+        $entries = DhcpEntry::searchFor($term);
+        return view('dhcp.bulkedit', compact('entries'));
     }
 
-    private function iscFormat($entry)
+    public function bulkUpdate(DhcpBulkUpdateRequest $request)
     {
-        $fixed = '';
-        if ($entry->ip) {
-            $fixed = "; fixed-address: {$entry->ip}";
+        foreach ($request->macs as $id => $mac) {
+            $entry = DhcpEntry::findOrFail($id);
+            $entry->mac = $mac;
+            $entry->ip = $request->ips[$id];
+            $entry->hostname = $request->hostnames[$id];
+            $entry->save();
         }
-        return "host {$entry->hostname} {hardware-address: {$entry->mac} $fixed}\n";
+        return redirect()->action('DhcpController@index')->with('success_message', 'Updated');
     }
 }

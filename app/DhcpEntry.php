@@ -44,4 +44,23 @@ class DhcpEntry extends Model
         }
         return $hostname;
     }
+
+    public static function inIscFormat()
+    {
+        $entries = static::all();
+        $lines = '';
+        foreach ($entries as $entry) {
+            $lines .= static::iscFormat($entry);
+        }
+        return $lines;
+    }
+
+    private function iscFormat($entry)
+    {
+        $fixed = '';
+        if ($entry->ip) {
+            $fixed = "; fixed-address: {$entry->ip}";
+        }
+        return "host {$entry->hostname} {hardware-address: {$entry->mac} $fixed}\n";
+    }
 }

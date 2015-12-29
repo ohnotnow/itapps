@@ -23,6 +23,8 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('/edit/{id}', 'DhcpController@update');
             Route::delete('/delete/{id}', 'DhcpController@destroy');
             Route::get('/search/{term}', 'DhcpController@search');
+            Route::get('/bulkedit/{term?}', 'DhcpController@bulkEdit');
+            Route::post('/bulkedit', 'DhcpController@bulkUpdate');
         });
 
         Route::group(['prefix' => 'license'], function () {

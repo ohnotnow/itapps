@@ -40,6 +40,12 @@
                     </tr>
             </tbody>
         </table>
+        <div class="col-md-6">
+            <a href="#" class="btn btn-warning" @click="bulkEdit" v-if="searchterm">Bulk Edit</a>
+        </div>
+        <div class="col-md-6">
+            <p class="pull-right help-block">@{{ entries.length }} results</p>
+        </div>
     </div>
 </div>
 <script>
@@ -61,6 +67,9 @@
                 } else {
                     this.entries = {!! $entries !!}
                 }
+            },
+            bulkEdit: function() {
+                window.location = "{!! action('DhcpController@bulkEdit') !!}/" + encodeURIComponent(this.searchterm);
             }
         }
     });
