@@ -40,9 +40,14 @@ class DhcpEntry extends Model
     public function getHostnameAttribute($hostname)
     {
         if (!$hostname) {
-            return strtolower('dhcphost-' . preg_replace("/[^0-9a-fA-F]/", '-', $this->mac));
+            return static::generateHostname($this->mac);
         }
         return $hostname;
+    }
+
+    private static function generateHostname($mac)
+    {
+        return strtolower('dhcphost-' . preg_replace("/[^0-9a-fA-F]/", '-', $mac));
     }
 
     public static function inIscFormat()
@@ -55,12 +60,27 @@ class DhcpEntry extends Model
         return $lines;
     }
 
-    private function iscFormat($entry)
+    private static function iscFormat($entry)
     {
         $fixed = '';
         if ($entry->ip) {
             $fixed = "; fixed-address: {$entry->ip}";
         }
         return "host {$entry->hostname} {hardware-address: {$entry->mac} $fixed}\n";
+    }
+
+    public static function createFromForm($index, $mac, $request)
+    {
+        $entry = new static;
+        $entry->mac = $mac;
+        $entry->hostname = $request->hostnames[$index] ? $request->hostnames[$index] : static::generateHostname($mac);
+        $entry->ip = $request->ips[$index];
+        $entry->owner_email = $request->owner_email;
+        $entry->notes = $request->notes;
+        $entry->is_ssd = $request->is_ssd;
+        $entry->is_disabled = $request->is_disabled;
+        $entry->added_by = $request->added_by;
+        $entry->save();
+        return $entry;
     }
 }

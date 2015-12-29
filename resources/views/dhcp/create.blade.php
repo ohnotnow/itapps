@@ -7,6 +7,7 @@
         <hr />
         <form method="POST" action="{!! action('DhcpController@store') !!}">
         {!! csrf_field() !!}
+        <input type="hidden" name="added_by" value="{{ Auth::user()->email }}">
         <div class="row" v-for="entry in entries">
             <div class="col-md-4">
                 <div class="form-group">

@@ -12,7 +12,7 @@ Route::group(['middleware' => 'web'], function () {
         return view('welcome');
     });
 
-    Route::get('/getdhcpfile', 'DhcpController@dhcpFile');
+    Route::get('/api/v1/getdhcpfile', 'ApiController@getDhcpFile');
 
     Route::group(['middleware' => 'auth'], function () {
         Route::group(['prefix' => 'dhcp'], function () {

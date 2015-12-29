@@ -12,6 +12,9 @@ use App\Http\Requests\DhcpCreateRequest;
 use App\Http\Requests\DhcpUpdateRequest;
 use App\Http\Requests\DhcpBulkUpdateRequest;
 
+/**
+ * @SuppressWarnings(PHPMD.StaticAccess)
+ */
 class DhcpController extends Controller
 {
     public function index()
@@ -28,22 +31,8 @@ class DhcpController extends Controller
 
     public function store(DhcpCreateRequest $request)
     {
-        $owner_email = $request->owner_email;
-        $notes = $request->notes;
-        $is_ssd = $request->is_ssd;
-        $is_disabled = $request->is_disabled;
-        $added_by = Auth::user()->email;
         foreach ($request->macs as $index => $mac) {
-            $entry = new DhcpEntry;
-            $entry->mac = $mac;
-            $entry->hostname = $request->hostnames[$index] ? $request->hostnames[$index] : 'dhcphost-' . str_random(8);
-            $entry->ip = $request->ips[$index];
-            $entry->owner_email = $owner_email;
-            $entry->notes = $notes;
-            $entry->is_ssd = $is_ssd;
-            $entry->is_disabled = $is_disabled;
-            $entry->added_by = $added_by;
-            $entry->save();
+            DhcpEntry::createFromForm($index, $mac, $request);
         }
         return redirect()->action('DhcpController@index')->with('success_message', 'Saved');
     }
@@ -86,15 +75,10 @@ class DhcpController extends Controller
         return 100;
     }
 
-    public function dhcpFile()
-    {
-        $lines = DhcpEntry::inIscFormat();
-        return $lines;
-    }
-
     public function bulkEdit($term)
     {
-        $entries = DhcpEntry::searchFor($term);
+        $limit = $this->calculateResultsLimit($term);
+        $entries = DhcpEntry::searchFor($term, $limit);
         return view('dhcp.bulkedit', compact('entries'));
     }
 
