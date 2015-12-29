@@ -93,4 +93,10 @@ class DhcpController extends Controller
         }
         return redirect()->action('DhcpController@index')->with('success_message', 'Updated');
     }
+
+    public function editGlobalOptions()
+    {
+        $options = DhcpOption::latest()->first();
+        return view('dhcp.options_global', compact('options'));
+    }
 }

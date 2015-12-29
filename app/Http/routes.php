@@ -25,6 +25,7 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('/search/{term}', 'DhcpController@search');
             Route::get('/bulkedit/{term?}', 'DhcpController@bulkEdit');
             Route::post('/bulkedit', 'DhcpController@bulkUpdate');
+            Route::get('/options', 'DhcpController@editGlobalOptions');
         });
 
         Route::group(['prefix' => 'license'], function () {

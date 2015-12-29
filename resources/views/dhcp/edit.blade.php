@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row" id="dhcp_form">
-        <h3>Create New DHCP Entry</h3>
+        <h3>Edit DHCP Entry</h3>
         <hr />
         <form method="POST" action="{!! action('DhcpController@update', $entry->id) !!}">
         {!! csrf_field() !!}

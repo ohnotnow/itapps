@@ -5,6 +5,18 @@
     <div class="row">
         <div class="col-md-8">
             <a href="{!! action('DhcpController@create') !!}" class="btn btn-primary">Add New</a>
+            <div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                More <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="{!! action('DhcpController@editGlobalOptions') !!}">Global Options</a></li>
+                <li><a href="#">Subnet Groups</a></li>
+                <li><a href="#">Subnets</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Whatever</a></li>
+              </ul>
+            </div>
         </div>
         <div class="col-md-4">
             <div class="form-group pull">
