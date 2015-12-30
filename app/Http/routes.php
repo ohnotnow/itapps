@@ -27,6 +27,10 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('/bulkedit', 'DhcpController@bulkUpdate');
             Route::get('/options', 'DhcpController@editGlobalOptions');
             Route::post('/options', 'DhcpController@updateGlobalOptions');
+            Route::get('/networks', 'DhcpController@indexNetworks');
+            Route::get('/networks/create', 'DhcpController@createNetwork');
+            Route::post('/networks/create', 'DhcpController@storeNetwork');
+            Route::get('/subnets', 'DhcpController@indexSubnets');
         });
 
         Route::group(['prefix' => 'license'], function () {
