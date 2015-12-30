@@ -116,7 +116,7 @@ class DhcpController extends Controller
             $option->optional = $request->optionals[$index];
             $option->name = $request->names[$index];
             $option->value = $request->values[$index];
-            if ((! ($option->optional and $option->name and $option->value)) and $option->id) {
+            if ((! ($option->optional or $option->name or $option->value)) and $option->id) {
                 $option->delete();
             } else {
                 if ($option->id or $option->name) {
