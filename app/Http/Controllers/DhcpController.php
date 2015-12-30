@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\DhcpEntry;
+use App\DhcpOption;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Requests\DhcpRequest;
@@ -96,7 +97,31 @@ class DhcpController extends Controller
 
     public function editGlobalOptions()
     {
-        $options = DhcpOption::latest()->first();
+        $options = DhcpOption::whereNull('subnet_id')->get();
         return view('dhcp.options_global', compact('options'));
+    }
+
+    public function updateGlobalOptions(Request $request)
+    {
+        if (!$request->has('ids')) {
+            return redirect()->action('DhcpController@editGlobalOptions');
+        }
+        foreach ($request->ids as $index => $id) {
+            $option = new DhcpOption;
+            if ($id) {
+                $option = DhcpOption::findOrFail($id);
+            }
+            $option->optional = $request->optionals[$index];
+            $option->name = $request->names[$index];
+            $option->value = $request->values[$index];
+            if ((! ($option->optional and $option->name and $option->value)) and $option->id) {
+                $option->delete();
+            } else {
+                if ($option->id or $option->name) {
+                    $option->save();
+                }
+            }
+        }
+        return redirect()->action('DhcpController@editGlobalOptions');
     }
 }

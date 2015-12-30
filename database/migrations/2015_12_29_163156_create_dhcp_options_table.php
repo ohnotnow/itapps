@@ -16,7 +16,7 @@ class CreateDhcpOptionsTable extends Migration
             $table->increments('id');
             $table->integer('subnet_id')->unsigned()->nullable();
             $table->foreign('subnet_id')->references('id')->on('dhcp_subnets')->onDelete('cascade');
-            $table->boolean('is_optional')->default(true);
+            $table->string('optional')->default('option');
             $table->string('name');
             $table->string('value')->nullable();
             $table->timestamps();
