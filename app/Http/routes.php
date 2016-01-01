@@ -25,16 +25,24 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('/search/{term}', 'DhcpController@search');
             Route::get('/bulkedit/{term?}', 'DhcpController@bulkEdit');
             Route::post('/bulkedit', 'DhcpController@bulkUpdate');
+
             Route::get('/options/{subnet_id?}', 'DhcpOptionController@edit');
             Route::post('/options/{subnet_id?}', 'DhcpOptionController@update');
-            Route::get('/networks', 'DhcpController@indexNetworks');
-            Route::get('/networks/create', 'DhcpController@createNetwork');
-            Route::post('/networks/create', 'DhcpController@storeNetwork');
+
+            Route::get('/networks', 'DhcpNetworkController@index');
+            Route::get('/networks/create', 'DhcpNetworkController@create');
+            Route::post('/networks/create', 'DhcpNetworkController@store');
+            Route::get('/networks/edit/{id}', 'DhcpNetworkController@edit');
+            Route::post('/networks/edit/{id}', 'DhcpNetworkController@update');
+
             Route::get('/subnets', 'DhcpSubnetController@index');
-            Route::get('/subnets/create', 'DhcpSubnetController@create');
+            Route::get('/subnets/edit', 'DhcpSubnetController@create');
             Route::post('/subnets/create', 'DhcpSubnetController@store');
             Route::get('/subnets/edit/{id}', 'DhcpSubnetController@edit');
             Route::post('/subnets/edit/{id}', 'DhcpSubnetController@update');
+
+            Route::get('/ranges/edit/{id}', 'DhcpRangeController@edit');
+            Route::post('/ranges/edit/{id}', 'DhcpRangeController@update');
         });
 
         Route::group(['prefix' => 'license'], function () {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DhcpRange;
 use App\DhcpSubnet;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -18,5 +19,17 @@ class DhcpRangeController extends Controller
 
     public function update(Request $request, $subnetId)
     {
+        if (!$request->has('ids')) {
+            return redirect()->action('DhcpRangeController@edit', $subnetId)->with('success_message', 'Awww');
+        }
+        $subnet = DhcpSubnet::findOrFail($subnetId);
+        foreach ($request->ids as $index => $id) {
+            $range = DhcpRange::findOrNew($id);
+            $range->start = $request->starts[$index];
+            $range->end = $request->ends[$index];
+            $range->subnet_id = $subnetId;
+            $range->save();
+        }
+        return redirect()->action('DhcpRangeController@edit', $subnetId)->with('success_message', 'Updated!');
     }
 }

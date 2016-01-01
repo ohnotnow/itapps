@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row" id="option_list">
         <h3>DHCP Shared Networks</h3>
-        <a class="btn btn-primary" href="{!! action('DhcpController@createNetwork') !!}">Add New</a>
+        <a class="btn btn-primary" href="{!! action('DhcpNetworkController@create') !!}">Add New</a>
         <hr />
         <table class="table table-striped">
             <thead>
@@ -16,10 +16,14 @@
             <tbody>
                 @foreach ($networks as $network)
                     <tr>
-                        <td>{{ $network->name }}</td>
+                        <td>
+                            <a href="{!! action('DhcpNetworkController@edit', $network->id) !!}">
+                                {{ $network->name }}
+                            </a>
+                        </td>
                         <td>
                             @foreach ($network->subnets as $subnet)
-                                <a href="{!! action('DhcpController@showSubnet', $subnet->id) !!}">
+                                <a href="{!! action('DhcpSubnetController@edit', $subnet->id) !!}">
                                     {{ $subnet->name }}
                                 </a>,
                             @endforeach

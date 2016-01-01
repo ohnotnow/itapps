@@ -98,36 +98,6 @@ class DhcpController extends Controller
     }
 
 
-    public function indexNetworks()
-    {
-        $networks = DhcpSharedNetwork::all();
-        return view('dhcp.index_shared_networks', compact('networks'));
-    }
-
-    public function createNetwork()
-    {
-        $network = new DhcpSharedNetwork;
-        $subnets = DhcpSubnet::all();
-        return view('dhcp.create_shared_network', compact('network', 'subnets'));
-    }
-
-    public function storeNetwork(Request $request)
-    {
-        $network = new DhcpSharedNetwork;
-        $network->name = $request->name;
-        $network->save();
-        foreach ($network->subnets as $subnet) {
-            if (!in_array($subnet->id, $request->subnets)) {
-                $network->subnets()->delete($subnet);
-            }
-        }
-        if ($request->has('subnets')) {
-            foreach ($request->subnets as $subnet) {
-                $network->subnets()->save($subnet);
-            }
-        }
-        return redirect()->action('DhcpController@indexNetworks');
-    }
 
     public function showSubnet($id)
     {

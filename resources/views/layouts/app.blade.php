@@ -15,6 +15,7 @@
 
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
     <script src="/js/all.js"></script>
 
     <style>
@@ -65,5 +66,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <p />
+    @if (session('success_message'))
+        <span class="bg-success" id="success_box">{{ session('success_message') }}</span>
+        <script>
+            $(document).ready(function () {
+                setTimeout(function () {
+                    $("#success_box").fadeOut('slow');
+                }, 2000);
+            });
+        </script>
+    @endif
 </body>
 </html>

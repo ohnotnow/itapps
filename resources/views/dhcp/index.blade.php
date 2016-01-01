@@ -11,7 +11,7 @@
               </button>
               <ul class="dropdown-menu">
                 <li><a href="{!! action('DhcpOptionController@edit') !!}">Global Options</a></li>
-                <li><a href="{!! action('DhcpController@indexNetworks') !!}">Subnet Groups</a></li>
+                <li><a href="{!! action('DhcpNetworkController@index') !!}">Subnet Groups</a></li>
                 <li><a href="{!! action('DhcpSubnetController@index') !!}">Subnets</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="#">Whatever</a></li>

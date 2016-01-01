@@ -27,7 +27,7 @@
                     <td>{{ $subnet->network }}</td>
                     <td>{{ $subnet->netmask }}</td>
                     <td>{{ $subnet->sharedNetworkName() }}</td>
-                    <td><a href="">Ranges</a></td>
+                    <td><a href="{!! action('DhcpRangeController@edit', $subnet->id) !!}">Ranges</a></td>
                     <td><a href="{!! action('DhcpOptionController@edit', $subnet->id) !!}">Options</a></td>
                 </tr>
             @endforeach
