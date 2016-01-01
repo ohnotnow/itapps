@@ -3,12 +3,18 @@
 @section('content')
 <div class="container">
     <div class="row" id="option_list">
-        <h3>Global DHCP Options</h3>
+        <h3>
+            @if ($subnetId)
+                Options for subnet {{ $subnetName }}
+            @else
+                Global DHCP Options
+            @endif
+        </h3>
         <p>
             <em>Note:</em> To remove an option just empty out all three boxes.
         </p>
         <hr />
-        <form method="POST" action="{!! action('DhcpController@updateGlobalOptions') !!}">
+        <form method="POST" action="{!! action('DhcpOptionController@update', $subnetId) !!}">
             {!! csrf_field() !!}
             <input type="hidden" name="edited_by" value="{{ Auth::user()->id }}">
             <div class="row" v-for="option in options">

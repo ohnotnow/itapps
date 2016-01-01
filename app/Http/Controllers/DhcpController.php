@@ -97,35 +97,6 @@ class DhcpController extends Controller
         return redirect()->action('DhcpController@index')->with('success_message', 'Updated');
     }
 
-    public function editGlobalOptions()
-    {
-        $options = DhcpOption::whereNull('subnet_id')->get();
-        return view('dhcp.options_global', compact('options'));
-    }
-
-    public function updateGlobalOptions(Request $request)
-    {
-        if (!$request->has('ids')) {
-            return redirect()->action('DhcpController@editGlobalOptions');
-        }
-        foreach ($request->ids as $index => $id) {
-            $option = new DhcpOption;
-            if ($id) {
-                $option = DhcpOption::findOrFail($id);
-            }
-            $option->optional = $request->optionals[$index];
-            $option->name = $request->names[$index];
-            $option->value = $request->values[$index];
-            if ((! ($option->optional or $option->name or $option->value)) and $option->id) {
-                $option->delete();
-            } else {
-                if ($option->id or $option->name) {
-                    $option->save();
-                }
-            }
-        }
-        return redirect()->action('DhcpController@editGlobalOptions');
-    }
 
     public function indexNetworks()
     {

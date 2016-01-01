@@ -25,12 +25,16 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('/search/{term}', 'DhcpController@search');
             Route::get('/bulkedit/{term?}', 'DhcpController@bulkEdit');
             Route::post('/bulkedit', 'DhcpController@bulkUpdate');
-            Route::get('/options', 'DhcpController@editGlobalOptions');
-            Route::post('/options', 'DhcpController@updateGlobalOptions');
+            Route::get('/options/{subnet_id?}', 'DhcpOptionController@edit');
+            Route::post('/options/{subnet_id?}', 'DhcpOptionController@update');
             Route::get('/networks', 'DhcpController@indexNetworks');
             Route::get('/networks/create', 'DhcpController@createNetwork');
             Route::post('/networks/create', 'DhcpController@storeNetwork');
-            Route::get('/subnets', 'DhcpController@indexSubnets');
+            Route::get('/subnets', 'DhcpSubnetController@index');
+            Route::get('/subnets/create', 'DhcpSubnetController@create');
+            Route::post('/subnets/create', 'DhcpSubnetController@store');
+            Route::get('/subnets/edit/{id}', 'DhcpSubnetController@edit');
+            Route::post('/subnets/edit/{id}', 'DhcpSubnetController@update');
         });
 
         Route::group(['prefix' => 'license'], function () {
