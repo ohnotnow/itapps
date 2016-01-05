@@ -2,6 +2,9 @@
 
 namespace App;
 
+/**
+ * @SuppressWarnings(PHPMD.StaticAccess)
+ */
 class DhcpFile
 {
     protected $globalOptions;
