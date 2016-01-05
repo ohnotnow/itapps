@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Cache;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +14,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $dhcpModels = ['App\DhcpEntry', 'App\DhcpSubnet', 'App\DhcpSharedNetwork', 'App\DhcpRange', 'App\DhcpOption'];
+        foreach ($dhcpModels as $model) {
+            $model::saved(function ($model) {
+                Cache::forget('dhcpfile');
+            });
+            $model::deleted(function ($model) {
+                Cache::forget('dhcpfile');
+            });
+        }
     }
 
     /**

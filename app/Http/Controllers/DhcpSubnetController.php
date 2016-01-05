@@ -28,7 +28,6 @@ class DhcpSubnetController extends Controller
         $subnet = new DhcpSubnet;
         $subnet->fill($request->all());
         $subnet->save();
-        Cache::forget('dhcpfile');
         return redirect()->action('DhcpSubnetController@index');
     }
 
@@ -44,7 +43,6 @@ class DhcpSubnetController extends Controller
         $subnet = DhcpSubnet::findOrFail($id);
         $subnet->fill($request->all());
         $subnet->save();
-        Cache::forget('dhcpfile');
         return redirect()->action('DhcpSubnetController@index');
     }
 
@@ -52,7 +50,6 @@ class DhcpSubnetController extends Controller
     {
         $subnet = DhcpSubnet::findOrFail($id);
         $subnet->delete();
-        Cache::forget('dhcpfile');
         return redirect()->action('DhcpSubnetController@index');
     }
 }
