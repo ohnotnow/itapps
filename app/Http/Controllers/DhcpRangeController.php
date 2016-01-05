@@ -8,6 +8,9 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+/**
+ * @SuppressWarnings(PHPMD.StaticAccess)
+ */
 class DhcpRangeController extends Controller
 {
     public function edit($subnetId)

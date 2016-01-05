@@ -8,6 +8,9 @@ use App\DhcpSharedNetwork;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+/**
+ * @SuppressWarnings(PHPMD.StaticAccess)
+ */
 class DhcpNetworkController extends Controller
 {
     public function index()

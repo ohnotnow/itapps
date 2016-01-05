@@ -14,6 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Listen for writes to DHCP models and clear the cached dhcp file
         $dhcpModels = ['App\DhcpEntry', 'App\DhcpSubnet', 'App\DhcpSharedNetwork', 'App\DhcpRange', 'App\DhcpOption'];
         foreach ($dhcpModels as $model) {
             $model::saved(function ($model) {
