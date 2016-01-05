@@ -43,6 +43,6 @@ class DhcpOptionController extends Controller
                 }
             }
         }
-        return redirect()->action('DhcpOptionController@edit', $subnetId);
+        return redirect()->action('DhcpOptionController@edit', $subnetId)->with('success_message', 'Updated!');
     }
 }

@@ -67,7 +67,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <p />
     @if (session('success_message'))
-        <span class="bg-success" id="success_box">{{ session('success_message') }}</span>
+        <span class="alert alert-success" id="success_box"><b>{{ session('success_message') }}</b></span>
         <script>
             $(document).ready(function () {
                 setTimeout(function () {

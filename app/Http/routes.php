@@ -4,6 +4,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::group(['middleware' => 'api'], function () {
+    Route::get('/api/v1/getdhcpfile', 'ApiController@getDhcpFile');
+});
+
 Route::group(['middleware' => 'web'], function () {
 
     Route::auth();
@@ -12,7 +16,6 @@ Route::group(['middleware' => 'web'], function () {
         return view('welcome');
     });
 
-    Route::get('/api/v1/getdhcpfile', 'ApiController@getDhcpFile');
 
     Route::group(['middleware' => 'auth'], function () {
         Route::group(['prefix' => 'dhcp'], function () {

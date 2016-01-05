@@ -50,25 +50,6 @@ class DhcpEntry extends Model
         return strtolower('dhcphost-' . preg_replace("/[^0-9a-fA-F]/", '-', $mac));
     }
 
-    public static function inIscFormat()
-    {
-        $entries = static::all();
-        $lines = '';
-        foreach ($entries as $entry) {
-            $lines .= static::iscFormat($entry);
-        }
-        return $lines;
-    }
-
-    private static function iscFormat($entry)
-    {
-        $fixed = '';
-        if ($entry->ip) {
-            $fixed = "; fixed-address: {$entry->ip}";
-        }
-        return "host {$entry->hostname} {hardware-address: {$entry->mac} $fixed}\n";
-    }
-
     public static function createFromForm($index, $mac, $request)
     {
         $entry = new static;
@@ -82,5 +63,18 @@ class DhcpEntry extends Model
         $entry->added_by = $request->added_by;
         $entry->save();
         return $entry;
+    }
+
+    public function inIscFormat()
+    {
+        $disabled = '';
+        $fixed = '';
+        if ($this->ip) {
+            $fixed = "; fixed-address: {$this->ip}";
+        }
+        if ($this->is_disabled) {
+            $disabled = '### DISABLED ';
+        }
+        return "{$disabled}host {$this->hostname} {hardware-address: {$this->mac} $fixed}\n";
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Cache;
 use App\DhcpSubnet;
 use App\Http\Requests;
 use App\DhcpSharedNetwork;
@@ -12,7 +13,7 @@ class DhcpSubnetController extends Controller
 {
     public function index()
     {
-        $subnets = DhcpSubnet::all();
+        $subnets = DhcpSubnet::orderBy('name')->get();
         return view('dhcp.subnet.index', compact('subnets'));
     }
 
@@ -27,6 +28,7 @@ class DhcpSubnetController extends Controller
         $subnet = new DhcpSubnet;
         $subnet->fill($request->all());
         $subnet->save();
+        Cache::forget('dhcpfile');
         return redirect()->action('DhcpSubnetController@index');
     }
 
@@ -42,6 +44,7 @@ class DhcpSubnetController extends Controller
         $subnet = DhcpSubnet::findOrFail($id);
         $subnet->fill($request->all());
         $subnet->save();
+        Cache::forget('dhcpfile');
         return redirect()->action('DhcpSubnetController@index');
     }
 
@@ -49,6 +52,7 @@ class DhcpSubnetController extends Controller
     {
         $subnet = DhcpSubnet::findOrFail($id);
         $subnet->delete();
+        Cache::forget('dhcpfile');
         return redirect()->action('DhcpSubnetController@index');
     }
 }

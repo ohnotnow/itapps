@@ -5,7 +5,7 @@
     <div class="row" id="option_list">
         <h3>New DHCP Shared Network</h3>
         <hr />
-        <form method="POST" action="{!! action('DhcpController@storeNetwork') !!}">
+        <form method="POST" action="{!! action('DhcpNetworkController@store') !!}">
             {!! csrf_field() !!}
             <input type="hidden" name="edited_by" value="{{ Auth::user()->id }}">
             <div class="form-group">

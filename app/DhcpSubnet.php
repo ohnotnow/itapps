@@ -23,6 +23,11 @@ class DhcpSubnet extends Model
         return $this->hasMany(DhcpOption::class, 'subnet_id');
     }
 
+    public function scopeNotInSharedNetwork($query)
+    {
+        return $query->whereNull('network_id');
+    }
+
     public function setNetworkIdAttribute($value)
     {
         if (!$value) {

@@ -12,4 +12,9 @@ class DhcpRange extends Model
     {
         return $this->belongsTo(DhcpSubnet::class, 'subnet_id');
     }
+
+    public function inIscFormat()
+    {
+        return "range {$this->start} {$this->end};\n";
+    }
 }

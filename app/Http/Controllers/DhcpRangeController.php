@@ -28,16 +28,20 @@ class DhcpRangeController extends Controller
             $range->start = $request->starts[$index];
             $range->end = $request->ends[$index];
             $range->subnet_id = $subnetId;
-            $range->save();
+            if (!$range->start and !$range->end) {
+                $range->delete();
+            } else {
+                $range->save();
+            }
         }
-        $ranges = $subnet->ranges;
-        foreach ($ranges as $range) {
-            $parts = preg_split('\.', $range->start);
-            $ip1 = $parts[3];
-            $parts = preg_split('\.', $range->end);
-            $ip2 = $parts[3];
-            $valueRange = range($ip1, $ip1);
-        }
+        // $ranges = $subnet->ranges;
+        // foreach ($ranges as $range) {
+        //     $parts = preg_split('\.', $range->start);
+        //     $ip1 = $parts[3];
+        //     $parts = preg_split('\.', $range->end);
+        //     $ip2 = $parts[3];
+        //     $valueRange = range($ip1, $ip1);
+        // }
         return redirect()->action('DhcpRangeController@edit', $subnetId)->with('success_message', 'Updated!');
     }
 }

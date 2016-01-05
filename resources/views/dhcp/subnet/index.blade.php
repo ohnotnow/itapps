@@ -5,13 +5,13 @@
     <h3>Subnets</h3>
     <a href="{!! action('DhcpSubnetController@create') !!}" class="btn btn-primary">Add New</a>
     <hr />
-    <table class="table table-striped">
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
                 <th>Name</th>
                 <th>Network</th>
                 <th>Netmask</th>
-                <th>Belongs To</th>
+                <th>Shared Network</th>
                 <th></th>
                 <th></th>
             </tr>

@@ -14,7 +14,7 @@
                 <li><a href="{!! action('DhcpNetworkController@index') !!}">Subnet Groups</a></li>
                 <li><a href="{!! action('DhcpSubnetController@index') !!}">Subnets</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="#">Whatever</a></li>
+                <li><a href="{!! action('ApiController@getDhcpFile') !!}">View DHCP file</a></li>
               </ul>
             </div>
         </div>
