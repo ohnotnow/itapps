@@ -44,10 +44,12 @@
                 <a class="navbar-brand" href="/">IT Apps</a>
             </div>
             <div class="collapse navbar-collapse" id="spark-navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="/dhcp">DHCP</a></li>
-                    <li><a href="/licenses">Licenses</a></li>
-                </ul>
+                @if (Auth::check())
+                    <ul class="nav navbar-nav">
+                        <li><a href="/dhcp">DHCP</a></li>
+                        <li><a href="/licenses">Licenses</a></li>
+                    </ul>
+                @endif
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::guest())
                         <li><a href="/login">Login</a></li>

@@ -1,9 +1,5 @@
 <?php
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::group(['middleware' => 'api'], function () {
     Route::get('/api/v1/getdhcpfile', 'ApiController@getDhcpFile');
 });
@@ -11,6 +7,10 @@ Route::group(['middleware' => 'api'], function () {
 Route::group(['middleware' => 'web'], function () {
 
     Route::auth();
+    
+    Route::get('/', function () {
+        return view('welcome');
+    });
 
     Route::get('/home', function () {
         return view('welcome');
